@@ -1,0 +1,20 @@
+server:
+  port: 5000
+  
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://dpg-clhln8ef27hc739rrbj0-a.frankfurt-postgres.render.com/acasa_y9hp
+    username: acasa_y9hp_user
+    password: wP9n4OGibWdu7QpEHA1VknmrsWMFGAfS
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
