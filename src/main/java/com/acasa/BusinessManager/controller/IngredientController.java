@@ -2,6 +2,7 @@ package com.acasa.BusinessManager.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.acasa.BusinessManager.service.IngredientService;
 
 @RestController
 @RequestMapping(value = "/api/ingredient")
+@CrossOrigin(origins = "*")
 public class IngredientController {
 	
 	private final IngredientService ingredientService;

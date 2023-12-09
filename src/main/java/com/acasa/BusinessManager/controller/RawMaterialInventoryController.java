@@ -2,6 +2,7 @@ package com.acasa.BusinessManager.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -15,6 +16,7 @@ import com.acasa.BusinessManager.service.RawMaterialInventoryService;
 
 @RestController
 @RequestMapping(value = "/api/raw-material-inventory")
+@CrossOrigin(origins = "*")
 public class RawMaterialInventoryController {
 	
 	private final RawMaterialInventoryService rawMaterialInventoryService;
