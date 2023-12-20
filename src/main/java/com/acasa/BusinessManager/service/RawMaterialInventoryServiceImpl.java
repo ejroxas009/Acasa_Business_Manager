@@ -46,7 +46,7 @@ public class RawMaterialInventoryServiceImpl implements RawMaterialInventoryServ
 
 	@Override
 	public void deductInventory(Ingredient ingredient, Double quantity) {
-		RawMaterialInventory inventoryInDb = rawMaterialInventoryRepo.getInventoryByRawMaterialId(ingredient.getRawMaterial().getRaMaterialId());
+		RawMaterialInventory inventoryInDb = rawMaterialInventoryRepo.getInventoryByRawMaterialId(ingredient.getRawMaterial().getRawMaterialId());
 		
 		inventoryInDb.setQuantity(inventoryInDb.getQuantity() - (quantity*ingredient.getQuantity()));
 		rawMaterialInventoryRepo.save(inventoryInDb);

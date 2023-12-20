@@ -19,11 +19,11 @@ public class RawMaterial {
 	private LocalDateTime edited;
 	
 	
-	public Long getRaMaterialId() {
+	public Long getRawMaterialId() {
 		return rawMaterialId;
 	}
-	public void setRaMaterialId(Long raMaterialId) {
-		this.rawMaterialId = raMaterialId;
+	public void setRaMaterialId(Long rawMaterialId) {
+		this.rawMaterialId = rawMaterialId;
 	}
 	public String getRawMaterialName() {
 		return rawMaterialName;

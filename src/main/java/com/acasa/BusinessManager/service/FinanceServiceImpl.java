@@ -154,7 +154,7 @@ public class FinanceServiceImpl implements FinanceService {
 	public Double getAllInventoryValuationById(Long rawmatId) {
 		return rawMatInventoryService.getAllRawMaterialInventory()
 				.stream()
-				.filter(inventory -> inventory.getRawMaterial().getRaMaterialId().equals(rawmatId))
+				.filter(inventory -> inventory.getRawMaterial().getRawMaterialId().equals(rawmatId))
 				.mapToDouble(inventory -> inventory.getTotalPrice())
 				.sum();
 	}
