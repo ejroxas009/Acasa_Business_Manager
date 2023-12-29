@@ -6,6 +6,7 @@ public class ProductRequestDTO {
 	private String productName;
 	private String productDescription;
 	private List<String> ingredientsIdList;
+	private List<IngredientRequestDTO> ingredientRequest;
 	private Double productPrice;
 	
 	
@@ -33,6 +34,12 @@ public class ProductRequestDTO {
 	}
 	public void setProductPrice(Double productPrice) {
 		this.productPrice = productPrice;
+	}
+	public List<IngredientRequestDTO> getIngredientRequest() {
+		return ingredientRequest;
+	}
+	public void setIngredientRequest(List<IngredientRequestDTO> ingredientRequest) {
+		this.ingredientRequest = ingredientRequest;
 	}
 	
 	
