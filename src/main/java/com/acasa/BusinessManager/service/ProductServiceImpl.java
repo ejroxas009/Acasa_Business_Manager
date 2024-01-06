@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService{
 			Ingredient newIngredient = ingredientService.addIngredient(ingredientRequest);
 			ingredientList.add(newIngredient);
 		}
-	
+		
 		newProduct.setIngredients(ingredientList);
 		newProduct.setCreated(LocalDateTime.now());
 		return productRepo.save(newProduct);
