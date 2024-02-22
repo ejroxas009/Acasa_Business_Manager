@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://dpg-clhln8ef27hc739rrbj0-a.frankfurt-postgres.render.com/acasa_y9hp
-    username: acasa_y9hp_user
-    password: wP9n4OGibWdu7QpEHA1VknmrsWMFGAfS
+    url: jdbc:postgresql://dpg-cnbbf50l5elc73fjuka0-a.frankfurt-postgres.render.com/acasa_db
+    username: acasa_db_user
+    password: 5fn6c3Mjka5a9DVrMznu8srrHTXxXGLH
     
   jpa:
     hibernate:
