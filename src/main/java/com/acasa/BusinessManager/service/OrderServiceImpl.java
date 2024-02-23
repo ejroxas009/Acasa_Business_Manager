@@ -71,7 +71,7 @@ public class OrderServiceImpl implements OrderService{
 			}
 		}
 		
-		
+		newOrder.setCreated(LocalDateTime.now());
 		newOrder.setCustomerName(orderRequest.getCustomerName());
 		newOrder.setProductSoldList(productSoldList);
 		newOrder.setExtraEarnings(orderRequest.getExtraEarnings());
