@@ -1,7 +1,8 @@
 package com.acasa.BusinessManager.service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,47 +27,87 @@ public class FinanceServiceImpl implements FinanceService {
 		this.rawMatInventoryService = rawMatInventoryService;
 	}
 
+//	@Override
+//	public Double getAllSales() {
+//		double sum = (double)orderService.getAllOrders()
+//				.stream()
+//				.mapToDouble(order -> order.getTotalPrice())
+//				.sum();
+//		
+//		
+//		
+//		BigDecimal bigDecimal = new BigDecimal(sum);
+//		bigDecimal = bigDecimal.setScale(2,RoundingMode.HALF_UP);
+//		
+//		DecimalFormat df = new DecimalFormat("#0.00");
+//		return Double.parseDouble(df.format(bigDecimal));
+//				
+//	}
+	
 	@Override
 	public Double getAllSales() {
-		return orderService.getAllOrders()
-				.stream()
-				.mapToDouble(order -> order.getTotalPrice())
-				.sum();
-				
+	    double sum = orderService.getAllOrders()
+	            .stream()
+	            .mapToDouble(order -> order.getTotalPrice())
+	            .sum();
+	    
+	    BigDecimal bd = new BigDecimal(sum);
+	    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+	    
+	    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+	    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 	@Override
 	public Double getSalesByProduct(Long productId) {
-		return orderService.getAllProductsSold()
+		double sum = orderService.getAllProductsSold()
 				.stream()
 				.filter(sold -> sold.getProduct().getProductId().equals(productId))
 				.mapToDouble(sold -> sold.getTotalPrice())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 				
 	}
 
 	@Override
 	public Double getAllCollectedSales() {
-		return orderService.getAllOrders()
+		double sum = orderService.getAllOrders()
 				.stream()
 				.filter(order -> order.getIsCollected())
 				.mapToDouble(order -> order.getTotalPrice())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 	@Override
 	public Double getAllUncollectedSales() {
-		return orderService.getAllOrders()
+		double sum = orderService.getAllOrders()
 				.stream()
 				.filter(order -> !order.getIsCollected())
 				.mapToDouble(order -> order.getTotalPrice())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 	@Override
 	public Double getAllEarnings() {
 		
-		return orderService.getAllOrders()
+		double sum = orderService.getAllOrders()
 				.stream()
 				.filter(order-> order.getIsCollected() && !order.getIsRTS())
 				.mapToDouble(order -> {
@@ -78,15 +119,27 @@ public class FinanceServiceImpl implements FinanceService {
 	                return totalPrice - (extraExpense + shopeeCommission + shippingFee);
 	            })
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 	@Override
 	public Double getAllRtsLoses() {
-		return orderService.getAllOrders()
+		double sum = orderService.getAllOrders()
 				.stream()
 				.filter(order -> order.getIsRTS())
 				.mapToDouble(order -> order.getRtsLoss())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 //	@Override
@@ -111,28 +164,40 @@ public class FinanceServiceImpl implements FinanceService {
 	public Double getEarningsByProductId(Long productId) {
 	    List<Order> orders = orderService.getAllOrders();
 
-	    return orders.stream()
+	    double sum =  orders.stream()
 	            .flatMap(order -> order.getProductSoldList().stream())
 	            .filter(productSold -> productSold.getProduct().getProductId().equals(productId))
 	            .mapToDouble(ProductSold::getTotalPrice)
 	            .sum();
+	    
+	    BigDecimal bd = new BigDecimal(sum);
+	    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+	    
+	    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+	    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 
 	@Override
 	public Double getEarningsByMonth(String month, int year) {
 		
-		return orderService.getAllOrders()
+		double sum = orderService.getAllOrders()
 				.stream()
 				.filter(order -> order.getCreated().getMonth().equals(month))
 				.filter(order -> order.getCreated().getYear() == year)
 				.mapToDouble(order -> order.getTotalPrice())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 	@Override
 	public Double getEarningsByProductIdByMonth(String month ,int year, Long productId) {
-		return orderService.getAllOrders()
+		double sum = orderService.getAllOrders()
 				.stream()
 				.flatMap(order -> order.getProductSoldList().stream())
 				.filter(productSold -> productSold.getProduct().getProductId().equals(productId))
@@ -140,23 +205,41 @@ public class FinanceServiceImpl implements FinanceService {
 				.filter(productSold -> productSold.getCreated().getYear() == year)
 				.mapToDouble(productSold -> productSold.getTotalPrice())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 	@Override
 	public Double getAllInventoryValuation() {
-		return rawMatInventoryService.getAllRawMaterialInventory()
+		double sum = rawMatInventoryService.getAllRawMaterialInventory()
 				.stream()
 				.mapToDouble(inventory -> inventory.getTotalPrice())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 		
 	@Override
 	public Double getAllInventoryValuationById(Long rawmatId) {
-		return rawMatInventoryService.getAllRawMaterialInventory()
+		double sum = rawMatInventoryService.getAllRawMaterialInventory()
 				.stream()
 				.filter(inventory -> inventory.getRawMaterial().getRawMaterialId().equals(rawmatId))
 				.mapToDouble(inventory -> inventory.getTotalPrice())
 				.sum();
+		
+		 BigDecimal bd = new BigDecimal(sum);
+		    bd = bd.setScale(2, RoundingMode.HALF_UP); // Set scale to 2 decimal places, rounding mode HALF_UP
+		    
+		    DecimalFormat df = new DecimalFormat("#0.00"); // Format to two decimal places
+		    return Double.parseDouble(df.format(bd)); // Convert formatted BigDecimal back to double
 	}
 
 }
