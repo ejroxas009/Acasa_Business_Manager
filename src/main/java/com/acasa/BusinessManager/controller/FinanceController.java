@@ -1,5 +1,8 @@
 package com.acasa.BusinessManager.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -63,7 +66,7 @@ public class FinanceController {
 	}
 	
 	@GetMapping(value ="earnings-by-month/{month}/{year}")
-	public Double getEarningsByMonth(@PathVariable String month, @PathVariable int year) {
+	public Double getEarningsByMonth(@PathVariable int month, @PathVariable int year) {
 		return financeService.getEarningsByMonth(month, year);
 	}
 	
@@ -73,4 +76,29 @@ public class FinanceController {
 	}
 	
 	
+	@GetMapping(value = "sales/percentage")
+	public String getCurrentMonthsSalesPercentageChange() {
+		return financeService.getCurrentMonthsSalesPercentageChange();
+	}
+	
+	@GetMapping(value = "/earnings/percentage")
+	public String getCurrentMonthsEarningsPercentageChange() {
+		return financeService.getCurrentMonthsSalesPercentageChange();
+	}
+	
+	@GetMapping(value = "rts/percentage")
+	public String getCurrentMonthsRTSPercentageChange() {
+		return financeService.getCurrentMonthsRTSPercentageChange();
+	}
+	
+	
+	@GetMapping(value = "sales/uncollected/percentage")
+	public String getCurrenMonthsUncollectedSalesPercentageChange() {
+		return financeService.getCurrentMonthsUncollectedSalesPercentageChange();
+	}
+	
+	@GetMapping(value = "sales/yearly-data")
+	public List<Map<String, Object>> getYearlySales(){
+		return financeService.getYearlySales();
+	}
 }
