@@ -418,7 +418,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Double previousMonthsSales = this.getPreviousMonthsSales();
 		
 		if(previousMonthsSales == 0.0) {
-			return "No Sales last month";
+			return "No Sales";
 		}
 		
 		Double salesPercentageChange = ((currentMonthsSales-previousMonthsSales)/previousMonthsSales)*100;
@@ -431,7 +431,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Double previousMonthsEarnings = this.getPreviousMonthsEarnings();
 		
 		if(previousMonthsEarnings == 0.0) {
-			return "No earnings last month";
+			return "No earnings";
 		}
 		
 		Double currentMonthsEarningsPercentage = ((currentMonthsEarnings - previousMonthsEarnings)/previousMonthsEarnings)*100;
@@ -449,7 +449,7 @@ public class FinanceServiceImpl implements FinanceService {
 		System.out.println("Current Month's RTS: " + currentMonthsRTS);
 		System.out.println("Previous Month's RTS: " + previousMonthsRTS);
 		if(previousMonthsRTS == 0) {
-			return "No RTS last month";
+			return "No RTS";
 		}
 		RTSPercentageChange = ((currentMonthsRTS - previousMonthsRTS)/previousMonthsRTS)*100;
 		return RTSPercentageChange.toString() + "%";
@@ -469,7 +469,7 @@ public class FinanceServiceImpl implements FinanceService {
 		Double uncollectedSalesPercentageChange;
 		
 		if(previousMonthUncollectedSales == 0) {
-			return "No Uncollected Sales last Month";
+			return "No Uncollected Sales";
 		}
 		
 		uncollectedSalesPercentageChange = ((currentMonthUncollectedSales - previousMonthUncollectedSales)/previousMonthUncollectedSales)*100;
