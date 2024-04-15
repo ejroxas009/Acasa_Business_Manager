@@ -5,14 +5,18 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.acasa.BusinessManager.model.Order;
+import com.acasa.BusinessManager.model.Product;
 import com.acasa.BusinessManager.model.ProductSold;
 
 @Service
@@ -22,13 +26,16 @@ public class FinanceServiceImpl implements FinanceService {
 	
 	private final RawMaterialInventoryService rawMatInventoryService;
 	
+	private final ProductService productService;
+	
 
 	
 
-	public FinanceServiceImpl(OrderService orderService, RawMaterialInventoryService rawMatInventoryService) {
+	public FinanceServiceImpl(OrderService orderService, RawMaterialInventoryService rawMatInventoryService, ProductService productService) {
 		super();
 		this.orderService = orderService;
 		this.rawMatInventoryService = rawMatInventoryService;
+		this.productService = productService;
 	}
 
 	@Override
@@ -537,4 +544,71 @@ public class FinanceServiceImpl implements FinanceService {
 		
 		return data;
 	}
+	
+//	public List<Long> getOrdersProductId(){
+//		List<Long> productIdList = orderService.getAllOrders()
+//				.stream()
+//				.distinct()
+//				.map(order -> order.getProductSoldList().stream().map(productSold -> productSold.getProduct().getProductId()))
+//				.collect(Collectors.toList());
+//		
+//		return productIdList;
+//	}
+	
+	public List<Long> getOrdersProductId(){
+	    List<Long> productIdList = orderService.getAllOrders()
+	            .stream()
+	            .flatMap(order -> order.getProductSoldList().stream().map(productSold -> productSold.getProduct().getProductId()))
+	            .distinct()
+	            .collect(Collectors.toList());
+	    
+	    return productIdList;
+	}
+	
+	
+	public List<Map<String, Object>> getTopSellingProducts(){
+		List<Map<String, Object>> topProducts = new ArrayList<>();
+		
+		//Get All the orders
+		List<Order> orderList = orderService.getAllOrders();
+		//Get All the unique IDS
+		List<Long> productIdList = this.getOrdersProductId();
+		//Get all the sum of totalPrice of a product id
+		
+		for(Long productId : productIdList) {
+			Double sum = 0.0;
+			Product product = productService.getProductById(productId);
+			Map<String, Object> map = new HashMap<>();
+			for(Order order : orderList) {
+				
+				if(order.getCreated() != null && order.getIsCollected() && !order.getIsRTS() ) {
+					for(ProductSold productSold : order.getProductSoldList()) {
+						
+						if(productSold.getProduct().getProductId() == productId) {
+							sum += productSold.getTotalPrice(); 
+						}
+					}
+				}
+			}
+			map.put("value", sum);
+			map.put("label", product.getProductName());
+			topProducts.add(map);
+			
+		}
+		
+		topProducts.sort((m1, m2) -> Double.compare((double) m2.get("value"), (double) m1.get("value")));
+	    
+	    // Limit to 5
+	    if (topProducts.size() > 5) {
+	        topProducts = topProducts.subList(0, 5);
+	    }
+				
+		
+	return topProducts;
+		
+		
+		
+	}
+
+
 }

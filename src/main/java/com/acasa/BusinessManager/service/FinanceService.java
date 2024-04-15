@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.acasa.BusinessManager.model.Product;
+
 @Service
 public interface FinanceService {
 
@@ -42,6 +44,9 @@ public interface FinanceService {
 	Double getPreviousMonthsExpenses();
 	
 	List<Map<String, Object>> getYearlySales();
+	
+	List<Long> getOrdersProductId();
+	List<Map<String, Object>> getTopSellingProducts();
 	
 	
 }

@@ -101,4 +101,18 @@ public class FinanceController {
 	public List<Map<String, Object>> getYearlySales(){
 		return financeService.getYearlySales();
 	}
+	
+	
+//	---------------------------------------------------
+	
+	@GetMapping(value ="orders/unique-id")
+	public List<Long> getUniqueProductId(){
+		return financeService.getOrdersProductId();
+	}
+	
+	
+	@GetMapping(value ="orders/top-products")
+	public List<Map<String, Object>> getTopProducts(){
+		return financeService.getTopSellingProducts();
+	}
 }
